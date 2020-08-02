@@ -21,7 +21,7 @@ def yelp_search(keyword=None, location=None):
 
 def get_client_data():
     g = GeoIP2()
-    ip = '132.255.50.69'#get_random_ip()
+    ip = get_random_ip()
     try:
         return g.city(ip)
     except geoip2.errors.AddressNotFoundError:
