@@ -17,5 +17,5 @@ Se todos os comandos funcionarem corretamente, rode o servidor:
 
     python manage.py runserver
 
-Acesse o painel administrativo em: http://localhost:8000/admin
+Acesse: http://localhost:8000
 
