@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <div class="row">
         <div class="col-sm-6">
             <form autocomplete="off" action="{% url 'index' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <h2><a href="{% url 'index' %}">Buscador com OpenStreetMap</a></h2>
-                    <h4>[{{ city }} {% if country %} - {{ country }} {% endif %}]</h4>
+                    <h4 style="font-size: 15px">Este é um projeto simplista em Python/Django, que ultiliza os mapas OpenstreetMap,
+                        e o motor de buscas do Yelp.</h4>
+                    <h4 style="font-size: 15px">Você pode pesquisar por um termo e uma cidade especifica ou mesmo pesquisar apenas
+                        um termo em uma cidade aleatório, escolhida com bases em ips gerados aleatóriamente e consultados no GeoIP.</h4>
+                    <h4 style="font-size: 19px">A cidade escolhida é: <h3><b>{{ city }} {% if country %} - {{ country }} {% endif %}</b></h3></h4>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" name="key" placeholder="O que está procurando? (obrigatório)" required/>
@@ -18,13 +22,15 @@
                     <small id="keyLoc" class="form-text text-muted">Exemplo: Belém, Macapá, São Paulo</small>
                 </div>
                 <button type="submit" class="btn btn-success">Buscar</button>
+                <a href="{% url 'index' %}" class="btn btn-dark" role="button" aria-pressed="true">Nova busca</a>
             </form>
+            <br>
             {% if 'error' in items %}
-                <h1>Ops! Não encontramos nada em {{ city }}</h1>
+                <h4>Ops! Não encontramos nada em {{ city }} ;(</h4>
             {% elif busca and items.businesses|length < 1 %}
-                <h1>Nada encontrado sobre o termo buscado</h1>
+                <h4>Nada encontrado sobre o termo buscado ;(</h4>
             {% elif city and items %}
-                <h3>Resultados da Busca:</h3>
+                <h4 style="font-size: 20px">Resultados da Busca:</h4>
                 {% for biz in items.businesses %}
                     <span class="text-info">{{ biz.name }}, {{ city }}</span><br/>
                 {% endfor %}
@@ -33,4 +39,4 @@
         {% if city and items|length > 1 %}
             {% include 'maps.html' %}
         {% endif %}
-{% endblock %}
+{% endblock content %}
